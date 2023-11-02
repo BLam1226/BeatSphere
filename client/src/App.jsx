@@ -10,6 +10,7 @@ import { Outlet } from 'react-router-dom';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
+import MusicMapping from './components/MusicMapping';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -41,6 +42,7 @@ function App() {
         <Header />
         <div className="container">
           <Outlet />
+          <MusicMapping />
         </div>
         <Footer />
       </div>
