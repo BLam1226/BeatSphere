@@ -7,6 +7,7 @@ import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import ErrorPage from './pages/ErrorPage';
+import Callback from './Callback.jsx';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,9 @@ const router = createBrowserRouter([
       }, {
         path: '/me',
         element: <Profile />
+      }, {
+        path: '/callback',
+        element: <Callback />
       }
     ]
   },
