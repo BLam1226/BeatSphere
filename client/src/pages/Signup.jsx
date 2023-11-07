@@ -1,102 +1,138 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
 
-import { useMutation } from '@apollo/client';
-import { ADD_PROFILE } from '../utils/mutations';
+export default function Signup() {
+  // States for registration
+  const [userName, setuserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-import Auth from '../utils/auth';
+  // States for checking the errors
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(false);
 
-const Signup = () => {
-  const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
-  const [addProfile, { error, data }] = useMutation(ADD_PROFILE);
-
-  // update state based on form input changes
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
+  // Handling the name change
+  const handleName = (e) => {
+    setuserName(e.target.value);
+    setSubmitted(false);
   };
 
-  // submit form
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    console.log(formState);
+  // Handling the email change
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+    setSubmitted(false);
+  };
 
-    try {
-      const { data } = await addProfile({
-        variables: { ...formState },
-      });
+  // Handling the password change
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+    setSubmitted(false);
+  };
 
-      Auth.login(data.addProfile.token);
-    } catch (e) {
-      console.error(e);
+  // Handling the form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email === "" || userName === "" || password === "") {
+      setError(true);
+    } else {
+      setSubmitted(true);
+      setError(false);
     }
   };
 
-  return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
-          <div className="card-body">
-            {data ? (
-              <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
-              </p>
-            ) : (
-              <form onSubmit={handleFormSubmit}>
-                <input
-                  className="form-input"
-                  placeholder="Your username"
-                  name="name"
-                  type="text"
-                  value={formState.name}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="Your email"
-                  name="email"
-                  type="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="******"
-                  name="password"
-                  type="password"
-                  value={formState.password}
-                  onChange={handleChange}
-                />
-                <button
-                  className="btn btn-block btn-info"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </form>
-            )}
-
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
-            )}
-          </div>
-        </div>
+  // Showing success message
+  const successMessage = () => {
+    return (
+      <div
+        className="success"
+        style={{
+          display: submitted ? "" : "none",
+        }}
+      >
+        <h1>
+          User {userName} successfully registered <span>&#10003;</span>
+        </h1>
       </div>
-    </main>
-  );
-};
+    );
+  };
 
-export default Signup;
+  // Showing error message if error is true
+  const errorMessage = () => {
+    return (
+      <div
+        className="error"
+        style={{
+          display: error ? "" : "none",
+        }}
+      >
+        <h1>*Please enter all the fields*</h1>
+      </div>
+    );
+  };
+
+  return (
+    <div>
+      <div className="img-container">
+        <section>
+          <div className="row justify-space-between-md">
+            <div className="login-card w-full max-w-md mx-auto mt-10">
+              <h2 className="page-title font-semibold text-lg mb-6 text-center text-4xl font-bold subpixel-antialiased">
+                Sign Up
+              </h2>
+
+              <div className="messages">
+                {errorMessage()}
+                {successMessage()}
+              </div>
+
+              <form className="form login-form mt-0 mb-4 box-sizing: content-box">
+                <div className="form-group bg-gradient-to-r from-blue-500 to-blue-400 shadow-md rounded px-8 pt-6 pb-8 mb-2">
+                  <input
+                    className="form-input"
+                    type="text"
+                    id="email-signup"
+                    required
+                    value={email}
+                    placeholder="EMAIL"
+                    onChange={handleEmail}
+                  />
+                </div>
+                <div className="form-group bg-gradient-to-r from-blue-400 to-blue-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
+                  <input
+                    className="form-input"
+                    type="password"
+                    id="username-signup"
+                    required
+                    value={userName}
+                    placeholder="USERNAME"
+                    onChange={handleName}
+                  />
+                </div>
+                <div className="form-group bg-gradient-to-r from-blue-400 to-blue-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
+                  <input
+                    className="form-input"
+                    type="password"
+                    id="password-signup"
+                    required
+                    value={password}
+                    placeholder="PASSWORD"
+                    onChange={handlePassword}
+                  />
+                </div>
+                <div className="form-group bg-gradient-to-r from-blue-300 to-blue-200 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                  <button
+                    onClick={handleSubmit}
+                    className="btn btn-primary"
+                    type="submit"
+                  >
+                    <a>Sign Up</a>
+                  </button>
+                  <a href="/">Back To Login?</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
