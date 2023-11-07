@@ -1,94 +1,82 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../utils/mutations';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-import Auth from '../utils/auth';
+export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState();
 
-const Login = (props) => {
-  const [formState, setFormState] = useState({ email: '', password: '' });
-  const [login, { error, data }] = useMutation(LOGIN_USER);
-
-  // update state based on form input changes
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const user = { username, password };
+    // send the username and password to the server
+    const response = await axios.post("https://beatsphere.netlify.app/", user);
+    // set the state of the user
+    setUser(response.data);
+    // store the user in localStorage
+    localStorage.setItem("user", response.data);
+    console.log(response.data);
   };
 
-  // submit form
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    console.log(formState);
-    try {
-      const { data } = await login({
-        variables: { ...formState },
-      });
-
-      Auth.login(data.login.token);
-    } catch (e) {
-      console.error(e);
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUser(foundUser);
     }
+  }, []);
 
-    // clear form values
-    setFormState({
-      email: '',
-      password: '',
-    });
-  };
+  // if there's a user show the message below
+  if (user) {
+    return <div>{user.name} is loggged in</div>;
+  }
 
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Login</h4>
-          <div className="card-body">
-            {data ? (
-              <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
-              </p>
-            ) : (
-              <form onSubmit={handleFormSubmit}>
-                <input
-                  className="form-input"
-                  placeholder="Your email"
-                  name="email"
-                  type="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="******"
-                  name="password"
-                  type="password"
-                  value={formState.password}
-                  onChange={handleChange}
-                />
-                <button
-                  className="btn btn-block btn-info"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
-                </button>
+    <div>
+      <div className="img-container">
+        <section>
+          <div className="row justify-space-between-md">
+            <div className="login-card w-full max-w-md mx-auto mt-10">
+              <h2 className="page-title font-semibold text-lg mb-6 text-center text-4xl font-bold subpixel-antialiased">
+                LOGIN
+              </h2>
+              <form
+                onSubmit={handleSubmit}
+                className="form login-form mt-0 mb-4 box-sizing: content-box"
+              >
+                <div className="form-group bg-gradient-to-r from-blue-500 to-blue-400 shadow-md rounded px-8 pt-6 pb-8 mb-2">
+                  <input
+                    className="form-input"
+                    type="text"
+                    id="username-login"
+                    value={username}
+                    required
+                    placeholder="USERNAME"
+                    onChange={({ target }) => setUsername(target.value)}
+                  />
+                </div>
+                <div className="form-group bg-gradient-to-r from-blue-400 to-blue-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
+                  <input
+                    className="form-input"
+                    type="password"
+                    id="password-login"
+                    value={password}
+                    required
+                    placeholder="PASSWORD"
+                    onChange={({ target }) => setPassword(target.value)}
+                  />
+                </div>
+                <div className="form-group bg-gradient-to-r from-blue-300 to-blue-200 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                  <button className="btn btn-primary" type="submit">
+                    Login
+                  </button>
+                  <a href="/Signup">Sign Up?</a>
+                </div>
               </form>
-            )}
-
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
-            )}
+            </div>
           </div>
-        </div>
+        </section>
       </div>
-    </main>
+    </div>
   );
-};
-
-export default Login;
+}
