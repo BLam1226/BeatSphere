@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
+  const history = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState();
@@ -10,21 +12,24 @@ export default function Login() {
     e.preventDefault();
     const user = { username, password };
     // send the username and password to the server
-    const response = await axios.post("https://beatsphere.netlify.app/", user);
-    // set the state of the user
-    setUser(response.data);
-    // store the user in localStorage
-    localStorage.setItem("user", response.data);
-    console.log(response.data);
-  };
-
-  useEffect(() => {
-    const loggedInUser = localStorage.getItem("user");
-    if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      setUser(foundUser);
+    try {
+      // prettier-ignore
+      await axios.post("https://beatsphere.netlify.app/", { user })
+        .then(res => {
+          if ((res.data == "exists")) {
+            history("/home", { state: { id: username } });
+          } else if (res.data == "notexists") {
+            alert("User does not exist")
+          }
+        })
+        .catch (e=> {
+          alert("User does not exist")
+          console.log(e)
+        })
+    } catch (e) {
+      console.log(e);
     }
-  }, []);
+  };
 
   // if there's a user show the message below
   if (user) {
