@@ -33,10 +33,11 @@ const camera = new THREE.
 
   scene.add(sphere)
 
-  camera.position.z = 15
+  camera.position.z = 10
 
 function animate() {
     requestAnimationFrame(animate)
     renderer.render(scene, camera)
 }
-animate()
+
+animate();
