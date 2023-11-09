@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import globe from "/src/assets/local_1.svg";
 
 export default function Login() {
   const history = useNavigate();
@@ -42,6 +43,21 @@ export default function Login() {
         <section>
           <div className="row justify-space-between-md">
             <div className="login-card w-full max-w-md mx-auto mt-10">
+              <div className="globe">
+                <img src={globe} />
+                <p className="beat">
+                  <span className="f1">B</span>
+                  <span className="f2">E</span>
+                  <span className="f3">A</span>
+                  <span className="f4">T</span>
+                  <span className="f5">S</span>
+                  <span className="f6">P</span>
+                  <span className="f7">H</span>
+                  <span className="f8">E</span>
+                  <span className="f9">R</span>
+                  <span className="f10">E</span>
+                </p>
+              </div>
               <h2 className="page-title font-semibold text-lg mb-6 text-center text-4xl font-bold subpixel-antialiased">
                 LOGIN
               </h2>
