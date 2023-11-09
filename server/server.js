@@ -27,6 +27,13 @@ const startApolloServer = async () => {
   app.use(express.json());
   // cors allows https...etc--kenny
   app.use(cors());
+  app.use(function (req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader("Access-Control-Allow-Credentials", true);
+    next();
+  });
   // -------kenny
   app.use(
     "/graphql",
