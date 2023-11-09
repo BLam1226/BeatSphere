@@ -8,18 +8,16 @@ const GET_SONGS = gql`
       _id
       title
       artist
-      genre
     }
   }
 `;
 
 const ADD_SONG = gql`
-  mutation AddSong($title: String!, $artist: String!, $genre: String!) {
-    addSong(title: $title, artist: $artist, genre: $genre) {
+  mutation AddSong($title: String!, $artist: String!) {
+    addSong(title: $title, artist: $artist) {
       _id
       title
       artist
-      genre
     }
   }
 `;
@@ -44,7 +42,7 @@ function MusicMapping() {
       <ul>
         {data.songs.map((song) => (
           <li key={song._id}>
-            {song.title} - {song.artist} - {song.genre}
+            {song.title} - {song.artist}
           </li>
         ))}
       </ul>
