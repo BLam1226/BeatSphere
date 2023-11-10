@@ -33,7 +33,6 @@ const startApolloServer = async () => {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
   // cors allows https...etc--kenny
-
   // -------kenny
   app.use(
     "/graphql",
