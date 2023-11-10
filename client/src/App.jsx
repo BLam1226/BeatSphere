@@ -27,19 +27,16 @@ function App() {
 
   return (
     <>
-      <Navbar />
-      <div className="container">
-        <Routes>
-          <Route className="loginroute" path="/" element={<Login />} />
-          <Route className="loginroute" path="/Signup" element={<Signup />} />
-        </Routes>
-      </div>
-      <h1 className="country">{country}</h1>
-      <div className="dropdown">
-        <CountryDropdown
-          value={country}
-          onChange={(val) => selectCountry(val)}
-        />
+    <Navbar />
+       <div className="container">
+         <Routes>
+           <Route exact className="loginroute" path="/" element={<Login />} />
+           <Route exact className="loginroute" path="/Signup" element={<Signup />} />
+         </Routes>
+        </div>
+      <h1 className='country'>{country}</h1>
+      <div className='dropdown'>
+        <CountryDropdown value={country} onChange={(val) => selectCountry(val)} />
       </div>
       <div className="card-container">
         {topTracks.map((track, index) => (
