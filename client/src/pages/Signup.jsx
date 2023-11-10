@@ -5,7 +5,9 @@ import globe from "/src/assets/local_1.svg";
 
 export default function Signup() {
   // States for registration
+
   const history = useNavigate();
+  const [error, setError] = useState();
   const [username, setuserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,8 +28,8 @@ export default function Signup() {
           }
         })
         .catch (event=> {
-          alert("wrong details")
-          console.log(event)
+          console.error(event)
+          setError("Error Signing Up (Try Again)")
         })
     } catch (event) {
       console.log(event);
@@ -58,7 +60,7 @@ export default function Signup() {
               <h2 className="page-title font-semibold text-lg mb-6 text-center text-4xl font-bold subpixel-antialiased">
                 Sign Up
               </h2>
-
+              {error ? <text>{error}</text> : null}
               <form className="form login-form mt-0 mb-4 box-sizing: content-box">
                 <div className="form-group bg-gradient-to-r from-blue-500 to-blue-400 shadow-md rounded px-8 pt-6 pb-8 mb-2">
                   <input
@@ -107,6 +109,7 @@ export default function Signup() {
                   >
                     <a>Sign Up</a>
                   </button>
+
                   <a href="/">Back To Login?</a>
                 </div>
               </form>
