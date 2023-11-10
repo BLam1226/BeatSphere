@@ -19,12 +19,12 @@ const server = new ApolloServer({
   resolvers,
 });
 
-const corsOptions = {
-  origin: "http://localhost:3000", // Replace with the origin of your frontend application
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-};
+// const corsOptions = {
+//   origin: "http://localhost:3000", // Replace with the origin of your frontend application
+//   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+// };
 
-app.use(cors(corsOptions)); // Enable CORS with the specified options
+// app.use(cors(corsOptions)); // Enable CORS with the specified options
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
@@ -43,49 +43,49 @@ const startApolloServer = async () => {
 
   // -----------kenny
 
-  app.get("/", cors(), (req, res) => {});
+  // app.get("/", cors(), (req, res) => {});
 
-  app.post("/", async (req, res) => {
-    const { username, password } = req.body;
+  // app.post("/", async (req, res) => {
+  //   const { username, password } = req.body;
 
-    try {
-      const check = await Profile.findOne({ username: username });
+  //   try {
+  //     const check = await Profile.findOne({ username: username });
 
-      if (check) {
-        res.json("exists");
-      } else {
-        res.json("notexist");
-      }
-    } catch (e) {
-      res.json("notexist");
-    }
-  });
+  //     if (check) {
+  //       res.json("exists");
+  //     } else {
+  //       res.json("notexist");
+  //     }
+  //   } catch (e) {
+  //     res.json("notexist");
+  //   }
+  // });
 
-  app.get("/Signup", (req, res) => {});
+  // app.get("/Signup", (req, res) => {});
 
-  app.post("/Signup", cors(corsOptions), async (req, res) => {
-    const { username, email, password } = req.body;
+  // app.post("/Signup", cors(corsOptions), async (req, res) => {
+  //   const { username, email, password } = req.body;
 
-    const data = {
-      username: username,
-      email: email,
-      password: password,
-    };
+  //   const data = {
+  //     username: username,
+  //     email: email,
+  //     password: password,
+  //   };
 
-    try {
-      const check = await Profile.findOne({ email: email });
+  //   try {
+  //     const check = await Profile.findOne({ email: email });
 
-      if (check) {
-        res.json("Already exists");
-      } else {
-        res.json("not exist");
-        await Profile.insertMany({ data });
-      }
-    } catch (e) {
-      res.json("notexist");
-    }
-  });
-  // --------kenny
+  //     if (check) {
+  //       res.json("Already exists");
+  //     } else {
+  //       res.json("not exist");
+  //       await Profile.insertMany({ data });
+  //     }
+  //   } catch (e) {
+  //     res.json("notexist");
+  //   }
+  // });
+  // // --------kenny
 
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../client/dist")));
