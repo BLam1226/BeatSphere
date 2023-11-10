@@ -5,6 +5,7 @@ import globe from "/src/assets/local_1.svg";
 
 export default function Login() {
   const history = useNavigate();
+  const [error, setError] = useState();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState();
@@ -24,8 +25,8 @@ export default function Login() {
           }
         })
         .catch (e=> {
-          alert("User does not exist")
-          console.log(e)
+          console.error(e)
+          setError("User Does Not Exist")
         })
     } catch (e) {
       console.log(e);
@@ -61,6 +62,7 @@ export default function Login() {
               <h2 className="page-title font-semibold text-lg mb-6 text-center text-4xl font-bold subpixel-antialiased">
                 LOGIN
               </h2>
+              {error ? <text>{error}</text> : null}
               <form
                 onSubmit={handleSubmit}
                 className="form login-form mt-0 mb-4 box-sizing: content-box"
