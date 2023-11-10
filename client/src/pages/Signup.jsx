@@ -76,7 +76,7 @@ export default function Signup() {
                 <div className="form-group bg-gradient-to-r from-blue-400 to-blue-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
                   <input
                     className="form-input"
-                    type="password"
+                    type="text"
                     id="username-signup"
                     required
                     value={username}

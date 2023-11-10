@@ -19,6 +19,13 @@ const server = new ApolloServer({
   resolvers,
 });
 
+const corsOptions = {
+  origin: "http://localhost:3000", // Replace with the origin of your frontend application
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+};
+
+app.use(cors(corsOptions)); // Enable CORS with the specified options
+
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
   await server.start();
@@ -26,14 +33,6 @@ const startApolloServer = async () => {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
   // cors allows https...etc--kenny
-  app.use(cors());
-  app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    res.setHeader("Access-Control-Allow-Credentials", true);
-    next();
-  });
   // -------kenny
   app.use(
     "/graphql",
@@ -62,9 +61,9 @@ const startApolloServer = async () => {
     }
   });
 
-  app.get("/Signup", cors(), (req, res) => {});
+  app.get("/Signup", (req, res) => {});
 
-  app.post("/Signup", async (req, res) => {
+  app.post("/Signup", cors(corsOptions), async (req, res) => {
     const { username, email, password } = req.body;
 
     const data = {
