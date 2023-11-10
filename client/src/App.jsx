@@ -30,8 +30,8 @@ function App() {
     <Navbar />
        <div className="container">
          <Routes>
-           <Route className="loginroute" path="/" element={<Login />} />
-           <Route className="loginroute" path="/Signup" element={<Signup />} />
+           <Route exact className="loginroute" path="/" element={<Login />} />
+           <Route exact className="loginroute" path="/Signup" element={<Signup />} />
          </Routes>
         </div>
       <h1 className='country'>{country}</h1>
