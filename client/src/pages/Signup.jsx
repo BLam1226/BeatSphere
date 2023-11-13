@@ -5,7 +5,8 @@ import globe from "/src/assets/local_1.svg";
 
 export default function Signup() {
   // States for registration
-  const history = useNavigate();
+
+  const [error, setError] = useState();
   const [username, setuserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,26 +14,29 @@ export default function Signup() {
   // Handling the form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const user = { username, email, password };
-    // send the username and password to the server
-    try {
-      // prettier-ignore
-      await axios.post("https://beatsphere.netlify.app/", { user })
-        .then(res => {
-          if ((res.data == "exists")) {
-            alert("User already exists")
-          } else if (res.data == "notexists") {
-            history("/home", { state: { id: username } });
-          }
-        })
-        .catch (event=> {
-          alert("wrong details")
-          console.log(event)
-        })
-    } catch (event) {
-      console.log(event);
+    const emailEl = document.querySelector("#email-signup");
+    const usernameEl = document.querySelector("#username-signup");
+    const passwordEl = document.querySelector("#password-signup");
+
+    const response = await fetch("/Signup", {
+      method: "POST",
+      body: JSON.stringify({
+        email: emailEl.value,
+        username: usernameEl.value,
+        password: passwordEl.value,
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      document.location.replace("/Home");
+    } else {
+      alert("Failed to sign up");
     }
   };
+
+  // prettier-ignore
+  // document.querySelector('.login-form').onClick('submit', Signup);
 
   return (
     <div>
@@ -58,7 +62,7 @@ export default function Signup() {
               <h2 className="page-title font-semibold text-lg mb-6 text-center text-4xl font-bold subpixel-antialiased">
                 Sign Up
               </h2>
-
+              {error ? <text>{error}</text> : null}
               <form className="form login-form mt-0 mb-4 box-sizing: content-box">
                 <div className="form-group bg-gradient-to-r from-blue-500 to-blue-400 shadow-md rounded px-8 pt-6 pb-8 mb-2">
                   <input
@@ -107,6 +111,7 @@ export default function Signup() {
                   >
                     <a>Sign Up</a>
                   </button>
+
                   <a href="/">Back To Login?</a>
                 </div>
               </form>
