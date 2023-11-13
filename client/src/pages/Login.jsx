@@ -4,7 +4,6 @@ import { useNavigate, Link } from "react-router-dom";
 import globe from "/src/assets/local_1.svg";
 
 export default function Login() {
-  const history = useNavigate();
   const [error, setError] = useState();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -12,26 +11,27 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = { username, password };
-    // send the username and password to the server
-    try {
-      // prettier-ignore
-      await axios.post("https://beatsphere.netlify.app/", { user })
-        .then(res => {
-          if ((res.data == "exists")) {
-            history("/home", { state: { id: username } });
-          } else if (res.data == "notexists") {
-            alert("User does not exist")
-          }
-        })
-        .catch (e=> {
-          console.error(e)
-          setError("User Does Not Exist")
-        })
-    } catch (e) {
-      console.log(e);
+    const usernameEl = document.querySelector("#username-login");
+    const passwordEl = document.querySelector("#password-login");
+
+    const response = await fetch("/Login", {
+      method: "POST",
+      body: JSON.stringify({
+        username: usernameEl.value,
+        password: passwordEl.value,
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      document.location.replace("/Home");
+    } else {
+      alert("Failed to login");
     }
   };
+
+  // prettier-ignore
+  // document.querySelector('.login-form').addEventListener('submit', Login);
 
   // if there's a user show the message below
   if (user) {
