@@ -7,7 +7,7 @@ export default function useAuth(code) {
     const [expiresIn, setExpiresIn] = useState();
 
     useEffect(() => {
-        axios.post('https://powerful-earth-51293-6f18607437c5.herokuapp.com/login', {
+        axios.post('mongodb+srv://beatsphere:4Zk4wavqwvc6SqKS@cluster0.e6ykh2q.mongodb.net/?retryWrites=true&w=majority/login', {
             code,
     }).then(res => {
         setAccessToken(res.data.accessToken);
@@ -22,7 +22,7 @@ export default function useAuth(code) {
     useEffect(() => {
         if (!refreshToken || !expiresIn) return;
         const interval = setInterval(() => {
-        axios.post('https://powerful-earth-51293-6f18607437c5.herokuapp.com/refresh', {
+        axios.post('mongodb+srv://beatsphere:4Zk4wavqwvc6SqKS@cluster0.e6ykh2q.mongodb.net/?retryWrites=true&w=majority/refresh', {
             refreshToken,
     }).then(res => {
         setAccessToken(res.data.accessToken);
