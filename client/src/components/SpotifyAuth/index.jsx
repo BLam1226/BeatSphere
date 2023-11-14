@@ -19,21 +19,8 @@ const SpotifyAuth = () => {
           const response = await spotifyApi.exchangeCodeForToken(code);
           const accessToken = response.data.access_token;
 
-          console.log('accessToken', accessToken);
-
           // Set the access token and navigate to the player page
           spotifyApi.setAccessToken(accessToken);
-
-          // Save the access token to localStorage with expiration time
-          const expirationTime = response.data.expires_in * 1000; // Convert seconds to milliseconds
-          localStorage.setItem('access_token', accessToken);
-          localStorage.setItem('access_token_expires_at', Date.now() + expirationTime);
-
-          // Set a timeout to remove the access token from localStorage when it expires
-          setTimeout(() => {
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('access_token_expires_at');
-          }, expirationTime);
 
           navigate('/Player');
         } catch (error) {

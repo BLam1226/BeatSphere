@@ -5,7 +5,7 @@ const Player = () => {
   return (
     <div>
       <h2>Spotify Player Page</h2>
-      <SpotifyPlayer accessToken={localStorage.getItem('access_token')} />
+      <SpotifyPlayer />
     </div>
   );
 };
