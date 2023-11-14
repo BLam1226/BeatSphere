@@ -1,42 +1,47 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { Navigate, useNavigate, Link } from "react-router-dom";
 import globe from "/src/assets/local_1.svg";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../utils/mutations";
+import Auth from "../utils/auth";
 
-export default function Login() {
-  const [error, setError] = useState();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState();
+export default function Login(props) {
+  const navigate = useNavigate();
+  const [formState, setFormState] = useState({ email: "", password: "" });
+  const [login, { error, data }] = useMutation(LOGIN_USER);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const usernameEl = document.querySelector("#username-login");
-    const passwordEl = document.querySelector("#password-login");
+  // update state based on form input changes
+  const handleChange = (event) => {
+    const { name, value } = event.target;
 
-    const response = await fetch("/Login", {
-      method: "POST",
-      body: JSON.stringify({
-        username: usernameEl.value,
-        password: passwordEl.value,
-      }),
-      headers: { "Content-Type": "application/json" },
+    setFormState({
+      ...formState,
+      [name]: value,
     });
-
-    if (response.ok) {
-      document.location.replace("/Home");
-    } else {
-      alert("Failed to login");
-    }
   };
 
-  // prettier-ignore
-  // document.querySelector('.login-form').addEventListener('submit', Login);
+  // submit form
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(formState);
 
-  // if there's a user show the message below
-  if (user) {
-    return <div>{user.name} is loggged in</div>;
-  }
+    try {
+      const { data } = await login({
+        variables: { ...formState },
+      });
+
+      Auth.login(data.login.token);
+    } catch (e) {
+      console.error(e);
+    }
+
+    // clear form values
+    setFormState({
+      email: "",
+      password: "",
+    });
+  };
 
   return (
     <div>
@@ -62,40 +67,46 @@ export default function Login() {
               <h2 className="page-title font-semibold text-lg mb-6 text-center text-4xl font-bold subpixel-antialiased">
                 LOGIN
               </h2>
-              {error ? <text>{error}</text> : null}
-              <form
-                onSubmit={handleSubmit}
-                className="form login-form mt-0 mb-4 box-sizing: content-box"
-              >
-                <div className="form-group bg-gradient-to-r from-blue-500 to-blue-400 shadow-md rounded px-8 pt-6 pb-8 mb-2">
-                  <input
-                    className="form-input"
-                    type="text"
-                    id="username-login"
-                    value={username}
-                    required
-                    placeholder="USERNAME"
-                    onChange={({ target }) => setUsername(target.value)}
-                  />
+              {error && (
+                <div className=" error my-3 p-3 bg-danger text-red">
+                  {error.message}
                 </div>
-                <div className="form-group bg-gradient-to-r from-blue-400 to-blue-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
-                  <input
-                    className="form-input"
-                    type="password"
-                    id="password-login"
-                    value={password}
-                    required
-                    placeholder="PASSWORD"
-                    onChange={({ target }) => setPassword(target.value)}
-                  />
-                </div>
-                <div className="form-group bg-gradient-to-r from-blue-300 to-blue-200 shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                  <button className="btn btn-primary" type="submit">
-                    Login
-                  </button>
-                  <a href="/Signup">Sign Up?</a>
-                </div>
-              </form>
+              )}
+              {data ? (
+                <Navigate to="/"></Navigate>
+              ) : (
+                <form
+                  onSubmit={handleFormSubmit}
+                  className="form login-form mt-0 mb-4 box-sizing: content-box"
+                >
+                  <div className="form-group bg-gradient-to-r from-blue-500 to-blue-400 shadow-md rounded px-8 pt-6 pb-8 mb-2">
+                    <input
+                      className="form-input"
+                      placeholder="Email"
+                      name="email"
+                      type="email"
+                      defaultValue={formState.email}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="form-group bg-gradient-to-r from-blue-400 to-blue-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
+                    <input
+                      className="form-input"
+                      placeholder="******"
+                      name="password"
+                      type="password"
+                      defaultValue={formState.password}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="form-group bg-gradient-to-r from-blue-300 to-blue-200 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                    <button className="btn btn-primary" type="submit">
+                      Login
+                    </button>
+                    <a href="/Signup">Sign Up?</a>
+                  </div>
+                </form>
+              )}
             </div>
           </div>
         </section>

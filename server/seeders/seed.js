@@ -16,4 +16,6 @@ db.once("open", async () => {
   } catch (err) {
     throw err;
   }
+  console.log("all done!");
+  process.exit(0);
 });
