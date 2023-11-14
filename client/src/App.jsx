@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import "./App.css";
 import Card from "./components/Card";
 import { CountryDropdown } from "react-country-region-selector";
@@ -6,8 +7,8 @@ import Navbar from "./Navbar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import fetchTopTracks from "./lastFM";
-
-import { Route, Routes } from "react-router-dom";
+import Player from "./pages/Player";
+import SpotifyAuth from "./components/SpotifyAuth";
 
 function App() {
   const [country, setCountry] = useState("");
@@ -30,8 +31,10 @@ function App() {
     <Navbar />
        <div className="container">
          <Routes>
-           <Route exact className="loginroute" path="/" element={<Login />} />
+           <Route exact className="loginroute" path="/Login" element={<Login />} />
            <Route exact className="signuproute" path="/Signup" element={<Signup />} />
+           <Route path="/Spotify-Auth" element={<SpotifyAuth />} />
+           <Route path="/Player" element={<Player />} />
          </Routes>
         </div>
       <h1 className='country'>{country}</h1>
