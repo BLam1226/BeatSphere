@@ -1,3 +1,5 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const db = require("../config/connection");
 const { Profile } = require("../models");
 const profileSeeds = require("./profileSeeds.json");
@@ -8,6 +10,9 @@ db.once("open", async () => {
     await cleanDB("Profile", "profiles");
 
     await Profile.create(profileSeeds);
+
+    console.log("all done!");
+    process.exit(0);
   } catch (err) {
     throw err;
   }

@@ -7,7 +7,7 @@ export default function Navbar() {
       <ul>
         <CustomLink to="/">Login</CustomLink>
         <CustomLink to="/Signup">Sign Up</CustomLink>
-        <CustomLink to="/Fakepage">Fakepage</CustomLink>
+        <CustomLink to="/Countrypage">Country</CustomLink>
       </ul>
     </nav>
   );
