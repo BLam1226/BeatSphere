@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Card from "./components/Card";
 import { CountryDropdown } from "react-country-region-selector";
@@ -34,6 +34,7 @@ function App() {
            <Route exact className="loginroute" path="/Login" element={<Login />} />
            <Route exact className="signuproute" path="/Signup" element={<Signup />} />
            <Route path="/Player" element={<Player />} />
+           <Route path="/Countrypage" element={<Countrypage />} />
          </Routes>
         </div>
       <h1 className='country'>{country}</h1>
