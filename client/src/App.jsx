@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Card from "./components/Card";
 import { CountryDropdown } from "react-country-region-selector";
@@ -7,8 +8,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import fetchTopTracks from "./lastFM";
 import Countrypage from "./pages/Countrypage";
-
-import { Route, Routes } from "react-router-dom";
+import Player from "./pages/Player";
 
 function App() {
   const [country, setCountry] = useState("");
@@ -31,9 +31,10 @@ function App() {
     <Navbar />
        <div className="container">
          <Routes>
-           <Route exact className="loginroute" path="/" element={<Login />} />
+           <Route exact className="loginroute" path="/Login" element={<Login />} />
            <Route exact className="signuproute" path="/Signup" element={<Signup />} />
-           <Route exact className="loginroute" path="/Countrypage" element={<Countrypage />} />
+           <Route path="/Player" element={<Player />} />
+           <Route path="/Countrypage" element={<Countrypage />} />
          </Routes>
         </div>
       <h1 className='country'>{country}</h1>

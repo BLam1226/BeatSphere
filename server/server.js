@@ -1,16 +1,18 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
 const { ApolloServer } = require("@apollo/server");
 const { expressMiddleware } = require("@apollo/server/express4");
 const path = require("path");
 const { authMiddleware } = require("./utils/auth");
-// ---------kenny
-const cors = require("cors");
-// ----------kenny
-
+const bodyParser = require("body-parser");
 const Profile = require("./models/Profile");
+const cors = require("cors");
+const lyricsFinder = require("lyrics-finder");
 
 const { typeDefs, resolvers } = require("./schemas");
 const db = require("./config/connection");
+const spotifyWebApi = require("spotify-web-api-node");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -19,14 +21,65 @@ const server = new ApolloServer({
   resolvers,
 });
 
-// const corsOptions = {
-//   origin: "http://localhost:3000", // Replace with the origin of your frontend application
-//   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-// };
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.use(cors(corsOptions)); // Enable CORS with the specified options
+app.post("/login", (req, res) => {
+  const code = req.body.code;
+  const spotifyApi = new spotifyWebApi({
+    redirectUri:
+      "https://powerful-earth-51293-6f18607437c5.herokuapp.com/Player",
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+  });
 
-// Create a new instance of an Apollo server with the GraphQL schema
+  spotifyApi
+    .authorizationCodeGrant(code)
+    .then((data) => {
+      res.json({
+        accessToken: data.body.access_token,
+        refreshToken: data.body.refresh_token,
+        expiresIn: data.body.expires_in,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(400);
+    });
+});
+
+app.post("/refresh", (req, res) => {
+  const refreshToken = req.body.refreshToken;
+  const spotifyApi = new spotifyWebApi({
+    redirectUri:
+      "https://powerful-earth-51293-6f18607437c5.herokuapp.com/Player",
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    refreshToken,
+  });
+
+  spotifyApi
+    .refreshAccessToken()
+    .then((data) => {
+      res.json({
+        accessToken: data.body.access_token,
+        expiresIn: data.body.expires_in,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(400);
+    });
+});
+
+app.get("/lyrics", async (req, res) => {
+  const lyrics =
+    (await lyricsFinder(req.query.artist, req.query.track)) ||
+    "No Lyrics Found";
+  res.json({ lyrics });
+});
+
 const startApolloServer = async () => {
   await server.start();
 
@@ -40,52 +93,6 @@ const startApolloServer = async () => {
       context: authMiddleware,
     })
   );
-
-  // -----------kenny
-
-  // app.get("/", cors(), (req, res) => {});
-
-  // app.post("/", async (req, res) => {
-  //   const { username, password } = req.body;
-
-  //   try {
-  //     const check = await Profile.findOne({ username: username });
-
-  //     if (check) {
-  //       res.json("exists");
-  //     } else {
-  //       res.json("notexist");
-  //     }
-  //   } catch (e) {
-  //     res.json("notexist");
-  //   }
-  // });
-
-  // app.get("/Signup", (req, res) => {});
-
-  // app.post("/Signup", cors(corsOptions), async (req, res) => {
-  //   const { username, email, password } = req.body;
-
-  //   const data = {
-  //     username: username,
-  //     email: email,
-  //     password: password,
-  //   };
-
-  //   try {
-  //     const check = await Profile.findOne({ email: email });
-
-  //     if (check) {
-  //       res.json("Already exists");
-  //     } else {
-  //       res.json("not exist");
-  //       await Profile.insertMany({ data });
-  //     }
-  //   } catch (e) {
-  //     res.json("notexist");
-  //   }
-  // });
-  // // --------kenny
 
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../client/dist")));
