@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';  
 import spotifyApi from '../../spotify';
 
-const redirectUri = 'localhost:3000/Player';
+const redirectUri = 'https://powerful-earth-51293-6f18607437c5.herokuapp.com/Player';
 const clientId = 'be06c16b9fca42da816a259817bad5b3';
 
 const SpotifyAuth = () => {
