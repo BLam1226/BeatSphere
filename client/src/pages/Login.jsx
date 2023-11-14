@@ -73,7 +73,7 @@ export default function Login(props) {
                 </div>
               )}
               {data ? (
-                <Navigate to="/Fakepage"></Navigate>
+                <Navigate to="/"></Navigate>
               ) : (
                 <form
                   onSubmit={handleFormSubmit}
