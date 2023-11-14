@@ -19,6 +19,8 @@ const SpotifyAuth = () => {
           const response = await spotifyApi.exchangeCodeForToken(code);
           const accessToken = response.data.access_token;
 
+          console.log('accessToken', accessToken);
+
           // Set the access token and navigate to the player page
           spotifyApi.setAccessToken(accessToken);
 
