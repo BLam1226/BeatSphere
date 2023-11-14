@@ -7,15 +7,34 @@ const SpotifyPlayerComponent = () => {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    const accessToken = setAccessToken();
-
-    if (!accessToken) {
-      authenticateSpotify();
-    } else {
-      setLoggedIn(true);
-      setToken(accessToken);
-    }
+    const checkAccessToken = async () => {
+      const accessToken = setAccessToken();
+  
+      if (!accessToken) {
+        // If no access token is found, authenticate Spotify
+        authenticateSpotify();
+      } else {
+        try {
+          // Check the scope (you might want to adjust the endpoint based on your needs)
+          await fetch('https://api.spotify.com/v1/me', {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+  
+          setLoggedIn(true);
+        } catch (error) {
+          // If there's an error, token might be expired, refresh it
+          console.error('Error checking scope:', error);
+          await refreshAccessToken();
+          setLoggedIn(true);
+        }
+      }
+    };
+  
+    checkAccessToken();
   }, []);
+  
 
   return (
     <div>
