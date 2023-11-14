@@ -13,9 +13,9 @@ export default function useAuth(code) {
         setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
         setExpiresIn(res.data.expiresIn);
-        window.history.pushState({}, null, '/Player');
+        window.history.pushState({}, null, '/');
     }).catch(() => {
-        window.location = '/Player';
+        window.location = '/';
     })
     }, [code]);
 
@@ -28,7 +28,7 @@ export default function useAuth(code) {
         setAccessToken(res.data.accessToken);
         setExpiresIn(res.data.expiresIn);
     }).catch(() => {
-        window.location = '/Player';
+        window.location = '/';
     })
 }, (expiresIn - 60) * 1000)
     return () => clearInterval(interval)
