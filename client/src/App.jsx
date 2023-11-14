@@ -6,6 +6,7 @@ import Navbar from "./Navbar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import fetchTopTracks from "./lastFM";
+import Countrypage from "./pages/Countrypage";
 
 import { Route, Routes } from "react-router-dom";
 
@@ -32,6 +33,7 @@ function App() {
          <Routes>
            <Route exact className="loginroute" path="/" element={<Login />} />
            <Route exact className="signuproute" path="/Signup" element={<Signup />} />
+           <Route exact className="loginroute" path="/Countrypage" element={<Countrypage />} />
          </Routes>
         </div>
       <h1 className='country'>{country}</h1>
