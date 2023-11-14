@@ -1,13 +1,12 @@
 import React from 'react';
-import SpotifyPlayerComponent from '../components/SpotifyPlayer';
+import SpotifyLogin from "../SpotifyLogin";
+import Dashboard from "../Dashboard";
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
+const code = new URLSearchParams(window.location.search).get("code");
 
 const Player = () => {
-  return (
-    <div>
-      <h2>Spotify Player Page</h2>
-      <SpotifyPlayerComponent />
-    </div>
-  );
+  return code ? <Dashboard code={code} /> : <SpotifyLogin />;
 };
 
 export default Player;

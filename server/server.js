@@ -5,11 +5,14 @@ const { ApolloServer } = require("@apollo/server");
 const { expressMiddleware } = require("@apollo/server/express4");
 const path = require("path");
 const { authMiddleware } = require("./utils/auth");
-
+const bodyParser = require("body-parser");
 const Profile = require("./models/Profile");
+const cors = require("cors");
+const lyricsFinder = require("lyrics-finder");
 
 const { typeDefs, resolvers } = require("./schemas");
 const db = require("./config/connection");
+const spotifyWebApi = require("spotify-web-api-node");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -18,7 +21,65 @@ const server = new ApolloServer({
   resolvers,
 });
 
-// Create a new instance of an Apollo server with the GraphQL schema
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.post("/login", (req, res) => {
+  const code = req.body.code;
+  const spotifyApi = new spotifyWebApi({
+    redirectUri:
+      "https://powerful-earth-51293-6f18607437c5.herokuapp.com/Player",
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+  });
+
+  spotifyApi
+    .authorizationCodeGrant(code)
+    .then((data) => {
+      res.json({
+        accessToken: data.body.access_token,
+        refreshToken: data.body.refresh_token,
+        expiresIn: data.body.expires_in,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(400);
+    });
+});
+
+app.post("/refresh", (req, res) => {
+  const refreshToken = req.body.refreshToken;
+  const spotifyApi = new spotifyWebApi({
+    redirectUri:
+      "https://powerful-earth-51293-6f18607437c5.herokuapp.com/Player",
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    refreshToken,
+  });
+
+  spotifyApi
+    .refreshAccessToken()
+    .then((data) => {
+      res.json({
+        accessToken: data.body.access_token,
+        expiresIn: data.body.expires_in,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(400);
+    });
+});
+
+app.get("/lyrics", async (req, res) => {
+  const lyrics =
+    (await lyricsFinder(req.query.artist, req.query.track)) ||
+    "No Lyrics Found";
+  res.json({ lyrics });
+});
+
 const startApolloServer = async () => {
   await server.start();
 
