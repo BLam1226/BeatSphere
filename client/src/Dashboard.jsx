@@ -3,7 +3,7 @@ import useAuth from './useAuth';
 import { Container, Form } from 'react-bootstrap';
 import SpotifyWebApi from 'spotify-web-api-node';
 import TrackSearchResult from './TrackSearchResult';
-import SpotifyPlayer from './SpotifyPlayer';
+import SpotifyPlayerApp from './SpotifyPlayer';
 import axios from 'axios';
 
 const spotifyApi = new SpotifyWebApi({
@@ -84,6 +84,6 @@ export default function Dashboard({ code }) {
                 </div>
             )}
         </div>
-        <div><SpotifyPlayer accessToken={accessToken} trackUri={playingTrack?.uri} /></div>
+        <div><SpotifyPlayerApp accessToken={accessToken} trackUri={playingTrack?.uri} /></div>
     </Container>
 }
