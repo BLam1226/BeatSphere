@@ -8,7 +8,6 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import fetchTopTracks from "./lastFM";
 import Player from "./pages/Player";
-import SpotifyAuth from "./components/SpotifyAuth";
 
 function App() {
   const [country, setCountry] = useState("");
@@ -33,7 +32,6 @@ function App() {
          <Routes>
            <Route exact className="loginroute" path="/Login" element={<Login />} />
            <Route exact className="signuproute" path="/Signup" element={<Signup />} />
-           <Route path="/Spotify-Auth" element={<SpotifyAuth />} />
            <Route path="/Player" element={<Player />} />
          </Routes>
         </div>

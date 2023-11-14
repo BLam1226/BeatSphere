@@ -1,41 +1,31 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import spotifyApi from '../../spotify';
+import SpotifyWebApi from 'spotify-web-api-js';
 
-const redirectUri = 'https://powerful-earth-51293-6f18607437c5.herokuapp.com/Player';
-const clientId = 'be06c16b9fca42da816a259817bad5b3';
+const spotifyApi = new SpotifyWebApi();
 
-const SpotifyAuth = () => {
-  const navigate = useNavigate();
+export const authenticateSpotify = () => {
+  const clientId = 'be06c16b9fca42da816a259817bad5b3';
+  const redirectUri = 'https://powerful-earth-51293-6f18607437c5.herokuapp.com/Player';
+  const scopes = ['user-read-private', 'user-read-email', 'streaming'];
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get('code');
+  const loginUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=token&show_dialog=true`;
 
-    const handleAuthentication = async () => {
-      if (code) {
-        try {
-          // Assuming your Spotify API object has a method to exchange the code for an access token
-          const response = await spotifyApi.exchangeCodeForToken(code);
-          const accessToken = response.data.access_token;
-
-          // Set the access token and navigate to the player page
-          spotifyApi.setAccessToken(accessToken);
-
-          navigate('/Player');
-        } catch (error) {
-          console.error('Error exchanging code for token:', error);
-        }
-      } else {
-        const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=user-read-playback-state%20user-modify-playback-state`;
-        window.location.href = authUrl;
-      }
-    };
-
-    handleAuthentication();
-  }, [navigate]);
-
-  return <div>Redirecting to Spotify for authentication...</div>;
+  window.location.href = loginUrl;
 };
 
-export default SpotifyAuth;
+export const setAccessToken = () => {
+  const params = window.location.hash
+    .substring(1)
+    .split('&')
+    .reduce((acc, item) => {
+      const parts = item.split('=');
+      acc[parts[0]] = decodeURIComponent(parts[1]);
+      return acc;
+    }, {});
+
+  if (params.access_token) {
+    spotifyApi.setAccessToken(params.access_token);
+    return true;
+  } else {
+    return false;
+  }
+};
