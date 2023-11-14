@@ -10,11 +10,13 @@ export default function useAuth(code) {
         axios.post('mongodb+srv://beatsphere:4Zk4wavqwvc6SqKS@cluster0.e6ykh2q.mongodb.net/?retryWrites=true&w=majority/login', {
             code,
     }).then(res => {
+        console.log('Authentication Response: ', res.data);
         setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
         setExpiresIn(res.data.expiresIn);
         window.history.pushState({}, null, '/');
-    }).catch(() => {
+    }).catch(error => {
+        console.error('Authentication Error: ', error);
         window.location = '/Player';
     })
     }, [code]);
@@ -25,9 +27,11 @@ export default function useAuth(code) {
         axios.post('mongodb+srv://beatsphere:4Zk4wavqwvc6SqKS@cluster0.e6ykh2q.mongodb.net/?retryWrites=true&w=majority/refresh', {
             refreshToken,
     }).then(res => {
+        console.log('Refresh Token Response: ', res.data);
         setAccessToken(res.data.accessToken);
         setExpiresIn(res.data.expiresIn);
-    }).catch(() => {
+    }).catch(error => {
+        console.error('Refresh Token Error: ', error);
         window.location = '/Player';
     })
 }, (expiresIn - 60) * 1000)
