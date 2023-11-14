@@ -1,42 +1,43 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+
+import { Link } from "react-router-dom";
 import globe from "/src/assets/local_1.svg";
+import { useMutation } from "@apollo/client";
+import { ADD_PROFILE } from "../utils/mutations";
+import Auth from "../utils/auth";
 
 export default function Signup() {
-  // States for registration
+  const [formState, setFormState] = useState({
+    email: "",
+    username: "",
+    password: "",
+  });
+  const [addProfile, { error, data }] = useMutation(ADD_PROFILE);
 
-  const [error, setError] = useState();
-  const [username, setuserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  // Handling the form submission
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const emailEl = document.querySelector("#email-signup");
-    const usernameEl = document.querySelector("#username-signup");
-    const passwordEl = document.querySelector("#password-signup");
-
-    const response = await fetch("/Signup", {
-      method: "POST",
-      body: JSON.stringify({
-        email: emailEl.value,
-        username: usernameEl.value,
-        password: passwordEl.value,
-      }),
-      headers: { "Content-Type": "application/json" },
+  // update state based on form input changes
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
     });
-
-    if (response.ok) {
-      document.location.replace("/Home");
-    } else {
-      alert("Failed to sign up");
-    }
   };
 
-  // prettier-ignore
-  // document.querySelector('.login-form').onClick('submit', Signup);
+  // submit form
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(formState);
+
+    try {
+      const { data } = await addProfile({
+        variables: { ...formState },
+      });
+
+      Auth.login(data.addProfile.token);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div>
@@ -62,59 +63,61 @@ export default function Signup() {
               <h2 className="page-title font-semibold text-lg mb-6 text-center text-4xl font-bold subpixel-antialiased">
                 Sign Up
               </h2>
-              {error ? <text>{error}</text> : null}
-              <form className="form login-form mt-0 mb-4 box-sizing: content-box">
-                <div className="form-group bg-gradient-to-r from-blue-500 to-blue-400 shadow-md rounded px-8 pt-6 pb-8 mb-2">
-                  <input
-                    className="form-input"
-                    type="text"
-                    id="email-signup"
-                    required
-                    value={email}
-                    placeholder="EMAIL"
-                    onChange={(event) => {
-                      setEmail(event.target.value);
-                    }}
-                  />
-                </div>
-                <div className="form-group bg-gradient-to-r from-blue-400 to-blue-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
-                  <input
-                    className="form-input"
-                    type="text"
-                    id="username-signup"
-                    required
-                    value={username}
-                    placeholder="USERNAME"
-                    onChange={(event) => {
-                      setuserName(event.target.value);
-                    }}
-                  />
-                </div>
-                <div className="form-group bg-gradient-to-r from-blue-400 to-blue-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
-                  <input
-                    className="form-input"
-                    type="password"
-                    id="password-signup"
-                    required
-                    value={password}
-                    placeholder="PASSWORD"
-                    onChange={(event) => {
-                      setPassword(event.target.value);
-                    }}
-                  />
-                </div>
-                <div className="form-group bg-gradient-to-r from-blue-300 to-blue-200 shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                  <button
-                    onClick={handleSubmit}
-                    className="btn btn-primary"
-                    type="submit"
-                  >
-                    <a>Sign Up</a>
-                  </button>
+              {data ? (
+                <p>
+                  Success! You may now head{" "}
+                  <Link to="/Fakepage">back to the homepage.</Link>
+                </p>
+              ) : (
+                <form
+                  onSubmit={handleFormSubmit}
+                  className="form login-form mt-0 mb-4 box-sizing: content-box"
+                >
+                  <div className="form-group bg-gradient-to-r from-blue-500 to-blue-400 shadow-md rounded px-8 pt-6 pb-8 mb-2">
+                    <input
+                      className="form-input"
+                      placeholder="Username"
+                      name="username"
+                      type="username"
+                      defaultValue={formState.name}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="form-group bg-gradient-to-r from-blue-400 to-blue-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
+                    <input
+                      className="form-input"
+                      placeholder="Email"
+                      name="email"
+                      type="email"
+                      defaultValue={formState.email}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="form-group bg-gradient-to-r from-blue-400 to-blue-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
+                    <input
+                      className="form-input"
+                      placeholder="Your password"
+                      name="password"
+                      type="password"
+                      defaultValue={formState.password}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="form-group bg-gradient-to-r from-blue-300 to-blue-200 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                    <button className="btn btn-primary" type="submit">
+                      <a>Sign Up</a>
+                    </button>
 
-                  <a href="/">Back To Login?</a>
+                    <a href="/">Back To Login?</a>
+                  </div>
+                </form>
+              )}
+
+              {error && (
+                <div className="error my-3 p-3 bg-danger color-white">
+                  {error.message}
                 </div>
-              </form>
+              )}
             </div>
           </div>
         </section>

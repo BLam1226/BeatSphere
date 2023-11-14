@@ -1,7 +1,7 @@
 const typeDefs = `
   type Profile {
     _id: ID
-    name: String
+    username: String
     email: String
     password: String
     songs: [String]!
@@ -29,7 +29,7 @@ const typeDefs = `
   }
 
   type Mutation {
-    addProfile(name: String!, email: String!, password: String!): Auth
+    addProfile(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
 
     addSong(title: String!, artist: String!, genre: String!): Song

@@ -4,7 +4,7 @@ const { expressMiddleware } = require("@apollo/server/express4");
 const path = require("path");
 const { authMiddleware } = require("./utils/auth");
 // ---------kenny
-const cors = require("cors");
+
 // ----------kenny
 
 const Profile = require("./models/Profile");
@@ -43,48 +43,6 @@ const startApolloServer = async () => {
 
   // -----------kenny
 
-  // app.get("/", cors(), (req, res) => {});
-
-  // app.post("/", async (req, res) => {
-  //   const { username, password } = req.body;
-
-  //   try {
-  //     const check = await Profile.findOne({ username: username });
-
-  //     if (check) {
-  //       res.json("exists");
-  //     } else {
-  //       res.json("notexist");
-  //     }
-  //   } catch (e) {
-  //     res.json("notexist");
-  //   }
-  // });
-
-  // app.get("/Signup", (req, res) => {});
-
-  // app.post("/Signup", cors(corsOptions), async (req, res) => {
-  //   const { username, email, password } = req.body;
-
-  //   const data = {
-  //     username: username,
-  //     email: email,
-  //     password: password,
-  //   };
-
-  //   try {
-  //     const check = await Profile.findOne({ email: email });
-
-  //     if (check) {
-  //       res.json("Already exists");
-  //     } else {
-  //       res.json("not exist");
-  //       await Profile.insertMany({ data });
-  //     }
-  //   } catch (e) {
-  //     res.json("notexist");
-  //   }
-  // });
   // // --------kenny
 
   if (process.env.NODE_ENV === "production") {
