@@ -1,0 +1,30 @@
+.card-container {
+    border: 1px solid #000;
+    width: 200px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-placeholder {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #000;
+    background-image: linear-gradient(45deg, #000, #000 50%, transparent 50%, transparent),
+                      linear-gradient(-45deg, #000, #000 50%, transparent 50%, transparent);
+    background-size: 50% 50%;
+}
+
+.album-info {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.album-name {
+    font-weight: bold;
+}
+
+.album-description {
+    margin-top: 10px;
+}

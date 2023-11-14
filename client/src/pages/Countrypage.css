@@ -1,0 +1,57 @@
+/* Country */
+
+.Cpage {
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #333;
+  }
+  
+  .dropdown {
+    margin: 20px;
+    padding: 10px;
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .country {
+    font-size: 48px; 
+    margin: 20px 0;
+  }
+  
+  .Card1 {
+    width: 243px; 
+    background: #0544e3; 
+    color: #fff;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    /* margin-left: 10%; */
+  }
+  
+  .Card2 {
+    width: 250px; 
+    background: #0544e3; 
+    color: #fff;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    /* margin-left: 10%; */
+  }
+  
+  .Cardrow {
+  
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    flex-wrap: wrap;
+    /* width: 100%; */
+  }
