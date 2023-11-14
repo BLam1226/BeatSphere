@@ -7,6 +7,7 @@ import Navbar from "./Navbar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import fetchTopTracks from "./lastFM";
+import Countrypage from "./pages/Countrypage";
 import Player from "./pages/Player";
 
 function App() {
