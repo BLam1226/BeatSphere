@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { authenticateSpotify, setAccessToken } from '../SpotifyAuth';
+import SpotifyPlayer from 'react-spotify-web-playback';
 
-const SpotifyPlayer = () => {
+const SpotifyPlayerComponent = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
-    if (!setAccessToken()) {
+    const accessToken = setAccessToken();
+
+    if (!accessToken) {
       authenticateSpotify();
     } else {
       setLoggedIn(true);
-      // Initialize the Spotify Web Playback SDK here
-      // For more information, refer to the Spotify Web Playback SDK documentation.
+      setToken(accessToken);
     }
   }, []);
 
@@ -18,7 +21,12 @@ const SpotifyPlayer = () => {
     <div>
       {loggedIn ? (
         <div>
-          {/* Your Spotify Player UI goes here */}
+          <SpotifyPlayer
+            token={token}
+            callback={(state) => {
+              if (!state.isPlaying) console.log('Player is paused');
+            }}
+          />
         </div>
       ) : (
         <p>Logging in...</p>
@@ -27,4 +35,4 @@ const SpotifyPlayer = () => {
   );
 };
 
-export default SpotifyPlayer;
+export default SpotifyPlayerComponent;
