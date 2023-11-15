@@ -32,7 +32,12 @@ By following these steps, developers can efficiently set up BeatSphere's develop
 ## Usage
 
 Instructions and examples of the application can be found below:
-
+![Screenshot 2023-11-15 180014](https://github.com/BLam1226/BeatSphere/assets/127125695/5d89de36-9e42-4219-8f7e-55b700c189c0)
+![Screenshot 2023-11-15 180030](https://github.com/BLam1226/BeatSphere/assets/127125695/e2338e39-c7fd-4c64-8abb-5473cc362673)
+![Screenshot 2023-11-15 180047](https://github.com/BLam1226/BeatSphere/assets/127125695/8a302eea-240b-47b4-8ba9-d2a342857e95)
+![Screenshot 2023-11-15 180117](https://github.com/BLam1226/BeatSphere/assets/127125695/2a060a91-b8a9-4015-977e-2ffad2f265fe)
+![Screenshot 2023-11-15 180137](https://github.com/BLam1226/BeatSphere/assets/127125695/edb248c0-1a1c-4e9a-96bb-8eda928108d7)
+![Screenshot 2023-11-15 180236](https://github.com/BLam1226/BeatSphere/assets/127125695/6e34ddad-bf25-4923-a62e-ee1be428862c)
 
 ## Contributing
 N/A
