@@ -147,3 +147,17 @@ button:hover {
     opacity: 1;
   }
 }
+
+.log {
+  text-decoration: none;
+  border-style: solid black;
+  border-radius: 15px;
+  transition: transform 250ms;
+  background-color: black;
+  opacity: 0.3;
+}
+
+.log:hover {
+  opacity: 1;
+  color: #708ec0;
+}
