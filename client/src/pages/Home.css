@@ -1,0 +1,27 @@
+/* Home.css */
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+/* Style the paragraph */
+.main-content p {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-right: 10%;
+}
+
+/* Style the image */
+.main-content img {
+  opacity: 0.7;
+  width: 25vw;
+  height: auto;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
