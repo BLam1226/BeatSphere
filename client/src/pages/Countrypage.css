@@ -1,6 +1,7 @@
 /* Country */
 body {
   background-image: url("../assets/background.png") !important;
+  background-color: #141A2A;
 }
 
 .Cpage {
@@ -16,7 +17,7 @@ body {
 .dropdown {
   margin: 20px;
   padding: 10px;
-  background: #fff;
+  background: #708ec0;
   color: #000;
   border: none;
   border-radius: 5px;
