@@ -1,7 +1,9 @@
-html {
-  background-color: black;
+/* App.css */
+
+/* Resetting default styles for HTML and body */
+html,
+body {
   height: 100%;
-  width: 100%;
   margin: 0;
   padding: 0;
 }
@@ -12,6 +14,11 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
+  color: white; /* Setting default text color to white */
+}
+
+.container {
+  width: 80%;
 }
 
 .error {
@@ -22,96 +29,51 @@ body {
   color: white;
 }
 
+/* Consolidate common styles for the 'beat' class */
 .beat {
   color: white;
   font-size: 1.5rem;
   letter-spacing: 0.5rem;
   font-family: Georgia, "Times New Roman", Times, serif;
-  animation: fadeInAnimation ease 3s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-}
-.beat {
   animation: fadeInAnimation ease 4s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
 
-.f1 {
-  animation: fadeInAnimation ease 2s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-}
-.f2 {
-  animation: fadeInAnimation ease 2s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-}
-.f3 {
-  animation: fadeInAnimation ease 2s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-}
-.f4 {
-  animation: fadeInAnimation ease 2s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-}
-.f5 {
-  animation: fadeInAnimation ease-in-out 3s;
-  animation-iteration-count: 1;
-  animation-fill-mode: backwards;
-}
-.f6 {
-  animation: fadeInAnimation ease-in-out 3s;
-  animation-iteration-count: 1;
-  animation-fill-mode: backwards;
-}
-.f7 {
-  animation: fadeInAnimation ease-in-out 3s;
-  animation-iteration-count: 1;
-  animation-fill-mode: backwards;
-}
-.f8 {
-  animation: fadeInAnimation ease-in-out 3s;
-  animation-iteration-count: 1;
-  animation-fill-mode: backwards;
-}
-.f9 {
-  animation: fadeInAnimation ease-in-out 3s;
-  animation-iteration-count: 1;
-  animation-fill-mode: backwards;
-}
+/* Combine animation styles for f1 to f10 */
+.f1,
+.f2,
+.f3,
+.f4,
+.f5,
+.f6,
+.f7,
+.f8,
+.f9,
 .f10 {
   animation: fadeInAnimation ease-in-out 3s;
   animation-iteration-count: 1;
   animation-fill-mode: backwards;
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Consolidate common styles for the 'globe' class */
 .globe img {
   position: relative;
   display: inline;
-
   width: 50px;
-
   animation: fadeInAnimation ease-in-out 4s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
 
-@keyframes fadeInAnimation {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.nav {
-  display: none;
-}
-
+/* Navigation styles */
 label,
 h2,
 a {
@@ -120,42 +82,18 @@ a {
 }
 
 a {
-  color: white;
   padding: 1rem;
+  text-decoration: none; /* Removing default underline */
 }
 
 a:hover {
   color: blue;
 }
 
-section {
-  border-radius: 10px;
-  border: 10px;
-  text-align: center;
-  padding-top: 15rem;
-  margin-left: 1.3rem;
-}
+/* Add styles for your 'section' and 'form' elements here */
 
-form {
-  animation-duration: 1.5s;
-  animation-name: slidein;
-}
-
-@keyframes slidein {
-  from {
-    margin-top: 100%;
-  }
-  to {
-    margin-top: 0%;
-  }
-}
-
-text {
-  color: red;
-}
-
+/* Additional styling for your login form */
 .login-form {
-  /* position: relative; */
   z-index: 10;
   line-height: 30px;
 }
@@ -164,6 +102,7 @@ text {
   margin-left: 10px;
 }
 
+/* Success and error messages */
 .success {
   color: green !important;
 }
@@ -173,6 +112,7 @@ text {
   font-size: 10px;
 }
 
+/* Input and button styles */
 input {
   border: none;
   height: 1.5rem;
@@ -188,28 +128,22 @@ button {
   border-radius: 10px;
   width: 6rem;
   height: 1.5rem;
+  cursor: pointer;
 }
 
 button:hover {
   background-color: rgba(0, 0, 0, 0.6);
   color: blue;
-  cursor: pointer;
 }
 
-img {
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
+/* Add styles for other elements like 'img', 'text', 'pref', 'drop' as needed */
 
-/* questions */
-
-.pref {
-  color: white;
-}
-
-.drop {
-  color: white;
-  justify-content: center;
+/* Keyframe animation */
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Outlet } from "react-router-dom";
 import "./App.css";
 import Card from "./components/Card";
@@ -11,6 +11,7 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({

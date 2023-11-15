@@ -11,6 +11,7 @@ import Countrypage from "./pages/Countrypage.jsx";
 import Player from "./pages/Player.jsx";
 import Profile from "./pages/Profile.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
+import Globe from "./pages/Globepage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,9 @@ const router = createBrowserRouter([
       }, {
         path: "/Countrypage",
         element: <Countrypage />
+      }, {
+        path: "/Globepage",
+        element: <Globe />
       }, {
         path: "/Player",
         element: <Player />
