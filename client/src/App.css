@@ -161,3 +161,12 @@ button:hover {
   opacity: 1;
   color: #708ec0;
 }
+
+.logs {
+  text-decoration: none;
+}
+
+.logs:hover {
+  text-decoration: underline;
+  color: #708ec0;
+}
