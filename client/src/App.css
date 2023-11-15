@@ -9,7 +9,7 @@ body {
 }
 
 body {
-  background-image: url("../src/assets/headphonesart.png");
+  background-image: url("../src/assets/background.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -18,7 +18,13 @@ body {
 }
 
 .container {
+  margin: 0;
+  padding: 0;
   width: 80%;
+}
+
+.element {
+  position: relative;
 }
 
 .error {
