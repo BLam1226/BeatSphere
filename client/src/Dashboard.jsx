@@ -26,7 +26,7 @@ export default function Dashboard({ code }) {
     useEffect(() => {
         if (!playingTrack) return
 
-        axios.get('https://powerful-earth-51293-6f18607437c5.herokuapp.com/lyrics', {
+        axios.get('https://beat-sphere-be92cb90b28f.herokuapp.com/lyrics', {
             params: {
                 track: playingTrack.title,
                 artist: playingTrack.artist

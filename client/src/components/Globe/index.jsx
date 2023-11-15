@@ -14,10 +14,10 @@ const Globe = () => {
     // Create a WebGL renderer with alpha: true for a transparent background
     const renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById('globe-container').appendChild(renderer.domElement);
+    document.body.appendChild(renderer.domElement); // Append to body
 
     // Set the clear color of the renderer to transparent
-    renderer.setClearColor(0x000000, 0); // 0x000000 represents black, and 0 represents full transparency
+    renderer.setClearColor(0x000000, 0);
 
     // Create a sphere geometry (globe)
     const geometry = new THREE.SphereGeometry(2, 32, 32);
@@ -69,24 +69,18 @@ const Globe = () => {
 
     // Clean up on component unmount
     return () => {
-        window.removeEventListener('resize', handleResize);
-        
-        // Check if renderer and renderer.domElement exist before disposal
-        if (renderer && renderer.domElement) {
-          const globeContainer = document.getElementById('globe-container');
-          
-          // Check if globeContainer exists before attempting to removeChild
-          if (globeContainer) {
-            globeContainer.removeChild(renderer.domElement);
-          }
-          
-          // Dispose of the renderer
-          renderer.dispose();
-        }
-      };
+      window.removeEventListener('resize', handleResize);
+
+      // Check if renderer and renderer.domElement exist before disposal
+      if (renderer && renderer.domElement) {
+        document.body.removeChild(renderer.domElement); // Remove from body
+        // Dispose of the renderer
+        renderer.dispose();
+      }
+    };
   }, []);
 
-  return <div id="globe-container" />;
+  return null; // Return null instead of an empty div
 };
 
 export default Globe;
