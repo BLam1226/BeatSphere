@@ -79,7 +79,7 @@ export default function Signup() {
                       placeholder="Username"
                       name="username"
                       type="username"
-                      defaultValue={formState.name}
+                      defaultValue={formState.username}
                       onChange={handleChange}
                     />
                   </div>
