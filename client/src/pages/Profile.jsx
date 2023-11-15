@@ -1,8 +1,8 @@
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
-import SongsList from '../components/SongsList';
-import SongForm from '../components/SongForm';
+// import SongsList from '../components/SongsList';
+// import SongForm from '../components/SongForm';
 
 import { QUERY_SINGLE_PROFILE, QUERY_ME } from '../utils/queries';
 
@@ -47,15 +47,15 @@ const Profile = () => {
         songs...
       </h2>
 
-      {profile.songs?.length > 0 && (
-        <SongsList
-          songs={profile.songs}
-          isLoggedInUser={!profileId && true}
-        />
-      )}
+      {/* {profile.songs?.length > 0 && (
+        // <SongsList
+        //   songs={profile.songs}
+        //   isLoggedInUser={!profileId && true}
+        // />
+      )} */}
 
       <div className="my-4 p-4" style={{ border: '1px dotted #1a1a1a' }}>
-        <SongForm profileId={profile._id} />
+        {/* <SongForm profileId={profile._id} /> */}
       </div>
     </div>
   );
