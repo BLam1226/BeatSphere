@@ -98,14 +98,8 @@ function Countrypage() {
          />
         </div>
   
-        <div className="Card2">
-        <CountryCard
-        track={currentTrack6}
-        artist={currentArtist6}
-         />
+      
         </div>
-        </div>
-        
       </div>
     );
   }
