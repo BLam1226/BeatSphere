@@ -48,7 +48,7 @@ This project is licensed under the MIT License. Click the License Badge for deta
 ### Credits
 
 Brendan Lam: [BLam1226(GitHub)](https://github.com/BLam1226)  
-Keller Vicino: [KV647(GitHub)](https://github.com/KV647)
+Keller Vicino: [KV647(GitHub)](https://github.com/KV647)  
 Antonio Deleo: [TonyDeleo98(GitHub)](https://github.com/TonyDeleo98)  
 Kenneth Ramondo: [kramon25(GitHub)](https://github.com/kramon25)  
 
