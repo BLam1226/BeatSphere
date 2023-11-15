@@ -7,7 +7,7 @@ export default function useAuth(code) {
     const [expiresIn, setExpiresIn] = useState();
 
     useEffect(() => {
-        axios.post('mongodb+srv://beatsphere:4Zk4wavqwvc6SqKS@cluster0.e6ykh2q.mongodb.net/?retryWrites=true&w=majority/login', {
+        axios.post('/login', {
             code,
     }).then(res => {
         console.log('Authentication Response: ', res.data);
@@ -24,7 +24,7 @@ export default function useAuth(code) {
     useEffect(() => {
         if (!refreshToken || !expiresIn) return;
         const interval = setInterval(() => {
-        axios.post('mongodb+srv://beatsphere:4Zk4wavqwvc6SqKS@cluster0.e6ykh2q.mongodb.net/?retryWrites=true&w=majority/refresh', {
+        axios.post('/refresh', {
             refreshToken,
     }).then(res => {
         console.log('Refresh Token Response: ', res.data);
