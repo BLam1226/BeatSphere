@@ -28,8 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post("/login", (req, res) => {
   const code = req.body.code;
   const spotifyApi = new spotifyWebApi({
-    redirectUri:
-      "https://powerful-earth-51293-6f18607437c5.herokuapp.com/Player",
+    redirectUri: "https://beat-sphere-be92cb90b28f.herokuapp.com/Player",
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
   });
@@ -52,8 +51,7 @@ app.post("/login", (req, res) => {
 app.post("/refresh", (req, res) => {
   const refreshToken = req.body.refreshToken;
   const spotifyApi = new spotifyWebApi({
-    redirectUri:
-      "https://powerful-earth-51293-6f18607437c5.herokuapp.com/Player",
+    redirectUri: "https://beat-sphere-be92cb90b28f.herokuapp.com/Player",
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     refreshToken,
